@@ -66,6 +66,8 @@ socket.io実行環境の構築
 	cd C:\work\nodejs\wb		//nodeのインストールフォルダ内
 	cd C:\work\web		
 	cd C:\work\nodejs						//node.jsインストールフォルダ
+	cd C:\work\xampp\htdocs\wb\wb						//xampp
+
 ②socket.io　インストール
 	npm install --save socket.io	
 ③express　インストール
@@ -189,5 +191,29 @@ http://blog.tmyt.jp/entry/2017/01/07/175533
 
 https://teratail.com/questions/52031
 
+///実用に向けた開発項目////////////////////////////////////////
+①各セッションごとのURLオプション生成
+②複数画面化
+　ⅰ）消去前の保存
+　ⅱ）保存したファイルの読み出し
+　　・コンボボックス等で読出し
+③編集機能拡充
+　ⅰ)ペン種
+　　・鉛筆
+　　・フェルトペン
+　　・筆
+　　・消しゴム
+　ⅱ）カラーパレット
+　ⅲ）太さ
+　ⅳ）文字入力
+　Ⅴ）四角、多角形、円のスタンプ
+　Ⅵ）範囲選択
+　　・消去
+　　・cpoy/cut
+　　・移動
+　※レイヤー化
+　　・各オブジェクト単位の編集/消去
+　　
+④index.jsの起動処理
 
 
