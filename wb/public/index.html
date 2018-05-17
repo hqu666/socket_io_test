@@ -1,39 +1,36 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-	<title>Socket.IO から nodes直下; whiteboard</title>
- 	<link rel="stylesheet" href="style.css">
-  	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Cache-Control" content="no-cache">
-</head>
-<body>
+<html lang="jp">
+	<head>
+	  <meta charset="UTF-8">
+		<title>whiteboardサンプル</title>
+		<!--<title>Socket.IO から nodes直下; whiteboard</title>-->
+		<link rel="stylesheet" href="style.css">
+		<meta http-equiv="Pragma" content="no-cache">
+		<meta http-equiv="Cache-Control" content="no-cache">
+	</head>
+	<body style="overflow: hidden;">
+	<canvas class="whiteboard"></canvas>
+	<div class="colors">
+		<div class="color black"></div>
+		<div class="color red"></div>
+		<div class="color green"></div>
+		<div class="color blue"></div>
+		<div class="color yellow"></div>
+	</div>
 
-  <canvas class="whiteboard"></canvas>
-		<div class="colors">
-			<div class="color black"></div>
-		    <div class="color red"></div>
-		    <div class="color green"></div>
-		    <div class="color blue"></div>
-		    <div class="color yellow"></div>
-		</div>
-  
-		<div class="buttons" style="left: 400px;">
-				<div class="button" id="allclear">消去</div>
-		</div>
+	<div class="buttons" style="left: 400px;">
+		<div class="button" id="allclear">消去</div>
+	</div>
 
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/w_board.js"></script>
-  
-</body>
+
+	</body>
 </html>
 
 
 <!--
-
 https://github.com/socketio/socket.io/tree/master/examples/whiteboard
-
-
 -->
 
 

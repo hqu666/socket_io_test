@@ -18,6 +18,46 @@
   canvas.addEventListener('mouseup', onMouseUp, false);
   canvas.addEventListener('mouseout', onMouseUp, false);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
+  
+ 
+	var supportTouch = 'ontouchend' in document;  // タッチイベントが利用可能かの判別
+	var dbMsg = "supportTouch="+supportTouch;
+	// イベント名
+	var EVENTNAME_TOUCHSTART = supportTouch ? 'touchstart' : 'mousedown';
+	var EVENTNAME_TOUCHMOVE = supportTouch ? 'touchmove' : 'mousemove';
+	var EVENTNAME_TOUCHEND = supportTouch ? 'touchend' : 'mouseup';
+	var handleStart = function(event) {
+	  updateEventname(EVENTNAME_TOUCHSTART);
+	  updateXY(event);
+	  $hitarea.css('background-color', 'red');
+	  bindMoveAndEnd();
+	};
+	var handleMove = function(event) {
+	  event.preventDefault(); // タッチによる画面スクロールを止める
+	  updateEventname(EVENTNAME_TOUCHMOVE);
+	  updateXY(event);
+	};
+	var handleEnd = function(event) {
+	  updateEventname(EVENTNAME_TOUCHEND);
+	  updateXY(event);
+	  $hitarea.css('background-color', 'blue');
+	  unbindMoveAndEnd();
+	};
+	var bindMoveAndEnd = function() {
+	  $document.on(EVENTNAME_TOUCHMOVE, handleMove);
+	  $document.on(EVENTNAME_TOUCHEND, handleEnd);
+	};
+	var unbindMoveAndEnd = function() {
+	  $document.off(EVENTNAME_TOUCHMOVE, handleMove);
+	  $document.off(EVENTNAME_TOUCHEND, handleEnd);
+	};
+	 
+//	canvas.on(EVENTNAME_TOUCHSTART, handleStart);	//	https://app.codegrid.net/entry/touch-mouse#toc-2
+  
+  canvas.addEventListener('touchstart', onMouseDown, false);
+  canvas.addEventListener('touchend', onMouseUp, false);
+  canvas.addEventListener('touchcancel', onMouseUp, false);
+   canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
 
   for (var i = 0; i < colors.length; i++){
     colors[i].addEventListener('click', onColorUpdate, false);
@@ -57,11 +97,11 @@
     });
   }
 
-  function onMouseDown(e){
-    drawing = true;
-    current.x = e.clientX;
-    current.y = e.clientY;
-  }
+	function onMouseDown(e){
+		drawing = true;
+		current.x = e.clientX;
+		current.y = e.clientY;
+	}
 
   function onMouseUp(e){
     if (!drawing) { return; }
@@ -74,6 +114,14 @@
     drawLine(current.x, current.y, e.clientX, e.clientY, current.color, true);
     current.x = e.clientX;
     current.y = e.clientY;
+//    var original = event.originalEvent;
+//	if(original.changedTouches) {
+//		current.x = original.changedTouches[0].pageX;
+//		current.y = original.changedTouches[0].pageY;
+//	} else {
+//		current.x = e.clientX;
+//		current.y = e.clientY;
+//	}
   }
 
   function onColorUpdate(e){

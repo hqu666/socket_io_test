@@ -7,24 +7,28 @@
   box-sizing: border-box;
 }
 
+/**
+
+*/
 html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
+	height: 100%;
+ 	margin :0;
+ 	padding:0;
 }
 
 /**
  * Canvas
+
  */
 
 .whiteboard {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
 }
 
 .colors {
@@ -44,12 +48,11 @@ html, body {
 .color.yellow { background-color: yellow; }
 
 /**
-*‚±‚±‚©‚ç’Ç‹L
-*
+*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç‹L
 */
 .buttons {
-	position: relative;
 	top: 10px;
+	position: relative;
 	right: 10px;
 }
 
