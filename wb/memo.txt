@@ -1,0 +1,22 @@
+		
+		node -v
+		
+		npm install --save socket.io
+
+	npm install express -g
+	express ?version
+	
+	 npm install express ejs socket.io
+	 
+	 
+	 
+	 
+	 
+	 
+	 node index.js
+	 
+
+
+
+
+
