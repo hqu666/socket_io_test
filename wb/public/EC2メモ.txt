@@ -36,11 +36,7 @@ PowerShellなどで
 	
 web管理	
 FileZillaで操作
-・ホスト名		ec2-52-197-173-40.ap-northeast-1.compute.amazonaws.com
-・プロトコル	SFTP
-・ログオン		通常
-・ユーザー		ec2-user
-・パスワード	CS03tuamasu
+
 
 ④	sudo service httpd start
 ⑤	sudo vi /var/www/html/index.html		//ページ編集	https://sil.hatenablog.com/entry/aws-ec2-free-webserver
@@ -70,7 +66,8 @@ socket.io実行環境の構築
 	cd C:\work\nodejs\wb		//nodeのインストールフォルダ内
 	cd C:\work\web		
 	cd C:\work\nodejs						//node.jsインストールフォルダ
-	cd C:\work\xampp\htdocs\wb\wb						//xampp
+	cd /d h:	
+	cd H:\develop\xampp\htdocs\wb\wb	
 
 ②socket.io　インストール
 	npm install --save socket.io	
@@ -194,33 +191,6 @@ https://qiita.com/talefantasia/items/50bb4237b95dc46c014d
 http://blog.tmyt.jp/entry/2017/01/07/175533
 
 https://teratail.com/questions/52031
-
-///実用に向けた開発項目////////////////////////////////////////
-※index.jsの起動処理
-
-①各セッションごとのURLオプション生成
-
-②複数画面化
-　ⅰ）消去前の保存
-　ⅱ）保存したファイルの読み出し
-　　・コンボボックス等で読出し
-③編集機能拡充
-　ⅰ)ペン種
-　　・鉛筆
-　　・フェルトペン
-　　・筆
-　　・消しゴム
-　ⅱ）カラーパレット
-　ⅲ）太さ
-　ⅳ）文字入力
-　Ⅴ）四角、多角形、円のスタンプ
-　Ⅵ）範囲選択
-　　・消去
-　　・cpoy/cut
-　　・移動
-　※レイヤー化
-　　・各オブジェクト単位の編集/消去
-　　
 
 
 
