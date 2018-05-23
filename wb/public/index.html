@@ -9,22 +9,74 @@
 		<meta http-equiv="Cache-Control" content="no-cache">
 	</head>
 	<body style="overflow: hidden;">
-	<canvas class="whiteboard"></canvas>
-	<div class="colors">
-		<div class="color black"></div>
-		<div class="color red"></div>
-		<div class="color green"></div>
-		<div class="color blue"></div>
-		<div class="color yellow"></div>
-	</div>
+		<div id="container">
+			<div id="header">
+				<div class="colors">
+					<div class="color black"></div>
+					<div class="color red"></div>
+					<div class="color green"></div>
+					<div class="color blue"></div>
+					<div class="color yellow"></div>
+				</div>
+				<div class="buttons" style="left: 400px;">
+					<input type="button" id="allclear" value="消去"
+									style="width: 62px;height: 38px;border-radius: 4px;">
+					<!-- <div class="button" id="allclear">消去</div>  onclick="OnButtonClick();" -->
+				</div>
+			</div>
 
-	<div class="buttons" style="left: 400px;">
-		<div class="button" id="allclear">消去</div>
-	</div>
+			<div id="contents">
+				<canvas class="whiteboard" id="hitarea"></canvas>
+			</div>
 
+			<span id="footer">
+							<span id="infoAria"></span>
+							<span id="eventComent" style="text-align: right;margin-left:  50px;"></span>
+		</span>
+			<!-- <div id="footer">
+				<div id ="infoAria"></div>
+				<!-- <span id="eventComent" style="text-align: right;margin-left:  50px;"></span> -->
+			<!-- </div> --> -->
+	</div>
 	<script src="/socket.io/socket.io.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/w_board.js"></script>
+	<script type="text/javascript">
+		// var clone = require('clone');
+		// var startJs = require('node index.js');
 
+	// onload	;	ページ読み込み時に実行したい処理
+		window.onload = function(){
+
+			var dbmsg = "[onload]";
+			var protocol = location.protocol
+			dbmsg += "　,protocol="+protocol;
+			var urlStr = location.href +"";
+			dbmsg += ",url=　"+urlStr;
+			var host = location.hostname ;
+			dbmsg += "　,host="+host;
+			var path = location.pathname ;
+			dbmsg += "　,path="+path;
+			var query = location.search ;
+			dbmsg += "　,query="+query;
+
+			var	tframe = document.getElementById("tframe");
+			var	titolAncar = document.getElementById("titolAncar");
+
+			var targetUrl = urlStr.replace( path, ":3080" );
+			dbmsg += "　,targetUrl="+targetUrl;
+		//	tframe.src = targetUrl;			//"http://127.0.0.1:3080"="http://localhost:3080"
+	//		titolAncar.href = targetUrl;
+		//		const execSync = require('node index.js').execSync;		// require is not defined
+			// const result =  execSync('node index.js');
+		//	location.href = urlStr + " node index.js";
+			// var shell = new ActiveXObject("node");			//ActiveXObject is not defined
+			// shell.Exec("index.js"); 							// コマンドを実行
+			console.log(dbmsg);
+			var infoAria = document.getElementById("infoAria");
+			infoAria.innerHTML = urlStr;
+		}
+	</script>
 	</body>
 </html>
 
@@ -32,6 +84,3 @@
 <!--
 https://github.com/socketio/socket.io/tree/master/examples/whiteboard
 -->
-
-
-

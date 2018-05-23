@@ -18,9 +18,15 @@ EC２をSSHで操作
 	PowerShellなどで
 	①pem保存フォルダに移動
 		cd C:\work\web						
-		cd C:\work\xampp\htdocs\wb\wb\memo		
+		cd C:\work\xampp\htdocs\wb\wb\memo	
+		
+		cd /d H:\	
+		cd H:\develop\xampp\htdocs\wb\wb\memo
+			
 	②設定ファイルの権限設定
 		cacls cs-white-board.pem /g hkuwayama:F
+				cacls cs-white-board.pem /g 博臣:F
+
 	③	でログイン
 		ssh -i "cs-white-board.pem" ec2-user@52.197.173.40
 	④作業フォルダに移動
@@ -149,6 +155,7 @@ socket.io実行環境の構築
 
 
 SSHインストール
+https://www.eaton-daitron.jp/techblog/4627.html
 	①	cd 'C:\Program Files\OpenSSH-Win64'
 	②	Get-ExecutionPolicy									現在の設定を確認。
 															RemoteSigned　；スクリプトの実行が禁止

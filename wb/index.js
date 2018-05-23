@@ -30,3 +30,4 @@ io.on('connection', onConnection);
 
 //http.listen(port, () => console.log('EC2>>> ec2-52-197-173-40.ap-northeast-1.compute.amazonaws.com:' + port));
 http.listen(port, () => console.log('web>>> '+  "http://127.0.0.1" +':' + port));
+console.log('index.js : >>> '+  "http://127.0.0.1" +':' + port);
