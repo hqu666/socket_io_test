@@ -1,20 +1,15 @@
 'use strict';
 
 (function() {
-	var dbMsg ="index.js;"
-	var socket = io();
-	var canvas = document.getElementsByClassName('whiteboard')[0];
-	var colors = document.getElementsByClassName('color');
-	var eventComent = document.getElementById("eventComent");
-	eventComent.innerHTML = "Drow OK";
-	var $document = $(document);
-	var $hitarea = $('#whiteboard');
-var toucheX;
-var toucheY;
-//	var allclear = document.getElementById('allclear');
-
-	var context = canvas.getContext('2d');
-
+  var dbMsg = "index.js;"
+  var socket = io();
+  var canvas = document.getElementsByClassName('whiteboard')[0];				//æç”»é ˜åŸŸ
+  var colors = document.getElementsByClassName('color');						//ã‚«ãƒ©ãƒ¼ãƒ‘ãƒ¬ãƒƒãƒˆ
+  var eventComent = document.getElementById("eventComent");
+  eventComent.innerHTML = "Drow OK";
+  var $document = $(document);
+  var $hitarea = $('#whiteboard');
+  var context = canvas.getContext('2d');
   var current = {
     color: 'black'
   };
@@ -24,132 +19,39 @@ var toucheY;
   canvas.addEventListener('mouseup', onMouseUp, false);
   canvas.addEventListener('mouseout', onMouseUp, false);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
-
-//ƒ^ƒbƒ`ƒCƒxƒ“ƒg‚Æƒ}ƒEƒXƒCƒxƒ“ƒg
-//		http://yuitaku.hatenadiary.jp/entry/2017/09/16/132704
-
-	var supportTouch = 'ontouchend' in document;  // ƒ^ƒbƒ`ƒCƒxƒ“ƒg‚ª—˜—p‰Â”\‚©‚Ì”»•Ê
-	 dbMsg += "supportTouch="+supportTouch;
-	// ƒCƒxƒ“ƒg–¼
-	var EVENTNAME_TOUCHSTART = supportTouch ? 'touchstart' : 'mousedown';
-	dbMsg += ",START="+EVENTNAME_TOUCHSTART;
-	var EVENTNAME_TOUCHMOVE = supportTouch ? 'touchmove' : 'mousemove';
-	dbMsg += ",MOVE="+EVENTNAME_TOUCHMOVE;
-	var EVENTNAME_TOUCHEND = supportTouch ? 'touchend' : 'mouseup';
-	dbMsg += ",END="+EVENTNAME_TOUCHEND;
-	// •\¦‚ğƒAƒbƒvƒf[ƒg‚·‚éŠÖ”ŒQ
-	var updateXY = function(event) {
-		dbMsg += "updateXY;";
-	  // jQuery‚ÌƒCƒxƒ“ƒg‚ÍƒIƒŠƒWƒiƒ‹‚ÌƒCƒxƒ“ƒg‚ğƒ‰ƒbƒv‚µ‚½‚à‚ÌB
-	  // changedTouches‚ª—~‚µ‚¢‚Ì‚ÅAƒIƒŠƒWƒiƒ‹‚ÌƒCƒxƒ“ƒgƒIƒuƒWƒFƒNƒg‚ğæ“¾
-	  var original = event.originalEvent;
-	  var x, y;
-	  if(original.changedTouches) {
-	    x = original.changedTouches[0].pageX;
-	    y = original.changedTouches[0].pageY;
-	  // } else {
-	  //   x = event.pageX;
-	  //   y = event.pageY;
-	  }
-		dbMsg += "("+x+" , "+y+")";
-		current.x =x;
-		current.y = y;
-		// console.log(dbMsg);
-			eventComent.innerHTML = dbMsg;
-	};
-	var updateEventname = function(eventname) {
-		dbMsg += "updateEventname;"+eventname;
-		eventComent.innerHTML = dbMsg;
-	};
-
-	// ƒCƒxƒ“ƒgİ’è
-	var handleStart = function(event) {
-	  updateEventname(EVENTNAME_TOUCHSTART);
-	  updateXY(event);
-	  bindMoveAndEnd();
-		dbMsg += "handleStart;";
-		eventComent.innerHTML = dbMsg;
-	};
-
-	var handleMove = function(event) {
-	  event.preventDefault(); // ƒ^ƒbƒ`‚É‚æ‚é‰æ–ÊƒXƒNƒ[ƒ‹‚ğ~‚ß‚é
-	  updateEventname(EVENTNAME_TOUCHMOVE);
-	  updateXY(event);
-		dbMsg += "handleMove;";
-		eventComent.innerHTML = dbMsg;
-	};
-
-	var handleEnd = function(event) {
-	  updateEventname(EVENTNAME_TOUCHEND);
-	  updateXY(event);
-	  unbindMoveAndEnd();
-		dbMsg += "handleEnd;";
-		eventComent.innerHTML = dbMsg;
-	};
-
-	var bindMoveAndEnd = function() {
-	  $document.on(EVENTNAME_TOUCHMOVE, handleMove);
-	  $document.on(EVENTNAME_TOUCHEND, handleEnd);
-		dbMsg += "bindMoveAndEnd;";
-		eventComent.innerHTML = dbMsg;
-	};
-
-	var unbindMoveAndEnd = function() {
-	  $document.off(EVENTNAME_TOUCHMOVE, handleMove);
-	  $document.off(EVENTNAME_TOUCHEND, handleEnd);
-		dbMsg += "unbindMoveAndEnd;";
-		eventComent.innerHTML = dbMsg;
-	};
-
-	$hitarea.on(EVENTNAME_TOUCHSTART, handleStart);
-	supportTouch = 'ontouchend' in document;
-	dbMsg += ">>"+supportTouch;
-//	canvas.on(EVENTNAME_TOUCHSTART, handleStart);	//	https://app.codegrid.net/entry/touch-mouse#toc-2
-canvas.addEventListener(EVENTNAME_TOUCHSTART, onMouseDown, false);
-canvas.addEventListener(EVENTNAME_TOUCHEND, onMouseUp, false);
-// canvas.addEventListener('touchcancel', onMouseUp, false);
-canvas.addEventListener(EVENTNAME_TOUCHMOVE, throttle(onMouseMove, 10), false);
-  // canvas.addEventListener('touchstart', onMouseDown, false);
-  // canvas.addEventListener('touchend', onMouseUp, false);
-  // canvas.addEventListener('touchcancel', onMouseUp, false);
-  // canvas.addEventListener('touchmove', throttle(onMouseMove, 10), false);
-
-	// canvas.addEventListener('touchstart', handleStart, false);
-	// canvas.addEventListener('touchend', handleEnd, false);
-	// // canvas.addEventListener('touchcancel', touchcancel, false);
-	// canvas.addEventListener('touchmove', throttle(handleMove, 10), false);
-
-/////////////////////////////////////////////////////////////////////////////
-  for (var i = 0; i < colors.length; i++){
+  /////////////////////////////////////////////////////////////////////////////
+  for (var i = 0; i < colors.length; i++) {
     colors[i].addEventListener('click', onColorUpdate, false);
   }
 
-  socket.on('drawing', onDrawingEvent);						//org;•`‰æ
-  socket.on('allclear', function (data) {
-		dbMsg +="recive:all clear";
-		console.log(dbMsg);
-		eventComent.innerHTML = dbMsg;
-		allClear();
-	});
+  socket.on('drawing', onDrawingEvent); //org;æç”»
+  socket.on('allclear', function(data) {
+    dbMsg += "recive:all clear";
+    console.log(dbMsg);
+    eventComent.innerHTML = dbMsg;
+    allClear();
+  });
 
   window.addEventListener('resize', onResize, false);
   onResize();
 
 
-  function drawLine(x0, y0, x1, y1, color, emit){
-			dbMsg ="drawLine("+x0 +" , " + y0+")";
-			dbMsg +="`("+x1 +" , " + y1+")";
-			dbMsg +="color="+color;
-		eventComent.innerHTML = dbMsg;
-		context.beginPath();
-    context.moveTo(x0, y0);									//ƒTƒuƒpƒX‚ÌŠJn“_
-    context.lineTo(x1, y1);									//’¼‘O‚ÌÀ•W‚Æw’èÀ•W‚ğŒ‹‚Ô’¼ü‚ğˆø‚­
+  function drawLine(x0, y0, x1, y1, color, emit) {
+    dbMsg = "drawLine(" + x0 + " , " + y0 + ")";
+    dbMsg += "ï½(" + x1 + " , " + y1 + ")";
+    dbMsg += "color=" + color;
+    eventComent.innerHTML = dbMsg;
+    context.beginPath();
+    context.moveTo(x0, y0); //ã‚µãƒ–ãƒ‘ã‚¹ã®é–‹å§‹ç‚¹
+    context.lineTo(x1, y1); //ç›´å‰ã®åº§æ¨™ã¨æŒ‡å®šåº§æ¨™ã‚’çµã¶ç›´ç·šã‚’å¼•ã
     context.strokeStyle = color;
     context.lineWidth = 2;
     context.stroke();
     context.closePath();
 
-    if (!emit) { return; }
+    if (!emit) {
+      return;
+    }
     var w = canvas.width;
     var h = canvas.height;
 
@@ -163,74 +65,87 @@ canvas.addEventListener(EVENTNAME_TOUCHMOVE, throttle(onMouseMove, 10), false);
 
   }
 
-	function onMouseDown(e){
-		drawing = true;
-		current.x = e.clientX;
-		current.y = e.clientY;
-		dbMsg ="onMouseDown("+current.x +" , " + current.y+")";
-		var original = e.originalEvent;
- 	 	if(original != null){
- 			 // dbMsg +=",original="+original.changedTouches;
- 			if(original.changedTouches) {
- 				current.x = original.changedTouches[0].pageX;
- 				current.y = original.changedTouches[0].pageY;
-				// toucheX = original.changedTouches[0].pageX;
-				// toucheY= original.changedTouches[0].pageY;
-		}
-			dbMsg +=">>("+current.x +" , " + current.y +")";
-		}
-		eventComent.innerHTML = dbMsg;
-	}
-
-  function onMouseUp(e){
-    if (!drawing) { return; }
-    drawing = false;
-		var currentX = current.x;
-		var currentY = current.y;
-		dbMsg ="onMouseUp("+currentX +" , " + currentY+")";
-		current.x = e.clientX;
-		current.y = e.clientY;
-		var original = e.originalEvent;
- 	 	if(original != null){
-			// dbMsg +=",original="+original.changedTouches;
-			 if(original.changedTouches) {
-				 current.x = original.changedTouches[0].pageX;
-				 current.y = original.changedTouches[0].pageY;
-				 // toucheX = original.changedTouches[0].pageX;
-				 // toucheY= original.changedTouches[0].pageY;
-			 }
-		}
-		dbMsg +=">>("+current.x +" , " + current.y +")";
-		drawLine(currentX, currentY, current.x, current.y, current.color, true);
-		// drawLine(currentX, currentY, e.clientX, e.clientY, current.color, true);
-	 	eventComent.innerHTML = dbMsg;
+  function onMouseDown(e) {
+    drawing = true;
+    current.x = e.clientX;
+    current.y = e.clientY;
+    dbMsg = "onMouseDown(" + current.x + " , " + current.y + ")";
+    eventComent.innerHTML = dbMsg;
   }
 
-  function onMouseMove(e){
-    if (!drawing) { return; }
+  function onMouseUp(e) {
+    if (!drawing) {
+      return;
+    }
+    drawing = false;
+    var currentX = current.x;
+    var currentY = current.y;
+    dbMsg = "onMouseUp(" + currentX + " , " + currentY + ")";
+    current.x = e.clientX;
+    current.y = e.clientY;
+    drawLine(currentX, currentY, current.x, current.y, current.color, true);
+    eventComent.innerHTML = dbMsg;
+  }
+
+  function onMouseMove(e) {
+    if (!drawing) {
+      return;
+    }
     drawLine(current.x, current.y, e.clientX, e.clientY, current.color, true);
     current.x = e.clientX;
     current.y = e.clientY;
-		dbMsg ="onMouseMove("+current.x +" , " + current.y +")";
-	   var original = e.originalEvent;
-	 	 if(original != null){
-			// dbMsg +=",original="+original.changedTouches;
-			if(original.changedTouches) {
-				current.x = original.changedTouches[0].pageX;
-				current.y = original.changedTouches[0].pageY;
-				 // toucheX = original.changedTouches[0].pageX;
-				 // toucheY= original.changedTouches[0].pageY;
-			}
-		}
-		dbMsg +=">>("+current.x +" , " + current.y +")";
-		// drawLine(current.x, current.y, e.clientX, e.clientY, current.color, true);
-		eventComent.innerHTML = dbMsg;
+    dbMsg = "onMouseMove(" + current.x + " , " + current.y + ")";
+    eventComent.innerHTML = dbMsg;
   }
 
-  function onColorUpdate(e){
+  //ã‚¹ãƒãƒ›ã‚¿ãƒƒãƒå¯¾å¿œï¼›	http://tokidoki-web.com/2015/08/html5%E3%81%A8javascript%E3%81%A7%EF%BD%90%EF%BD%83%E3%83%BB%E3%82%B9%E3%83%9E%E3%83%9B%E3%81%AE%E3%83%9E%E3%83%AB%E3%83%81%E3%82%BF%E3%83%83%E3%83%81%E5%AF%BE%E5%BF%9C%E3%81%97%E3%81%A6%E3%82%84///////
+  canvas.ontouchstart = function(event) { //ç”»é¢ã«æŒ‡ãŒè§¦ã‚ŒãŸ
+    drawing = true;
+    dbMsg = "ontouchstart";
+    var toucheX = event.touches[0].pageX; //ã‚¿ãƒƒãƒã—ã¦ã„ã‚‹æ¹¯ä¾¿ã®æœ¬æ•°æ–‡ã€ã‚¤ãƒ™ãƒ³ãƒˆã¯ç™ºç”Ÿã™ã‚‹
+    var toucheY = event.touches[0].pageY;
+    dbMsg += "(" + toucheX + " , " + toucheY + ")";
+    current.x = toucheX;
+    current.y = toucheY;
+    eventComent.innerHTML = dbMsg;
+  };
+
+  canvas.ontouchmove = function(event) { //ç”»é¢ã«æŒ‡ã‚’è§¦ã‚ŒãŸã¾ã¾å‹•ã‹ã—ãŸ
+    dbMsg = "ontouchmove;drawing=" + drawing;
+    if (drawing) {
+      event.preventDefault(); // ç”»é¢ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ã‚’é˜²æ­¢ã™ã‚‹
+      var toucheX = event.touches[0].pageX;
+      var toucheY = event.touches[0].pageY;
+      dbMsg += "(" + toucheX + " , " + toucheY + ")";
+      drawLine(current.x, current.y, toucheX, toucheY, current.color, true);
+      current.x = toucheX;
+      current.y = toucheY;
+    }
+    eventComent.innerHTML = dbMsg;
+  };
+
+  canvas.ontouchend = function(event) { //ç”»é¢ã‹ã‚‰æŒ‡ã‚’é›¢ã—ãŸ
+    dbMsg = "ontouchend;drawing=" + drawing;
+    if (drawing) {
+      drawing = false;
+      var currentX = current.x;
+      var currentY = current.y;
+      dbMsg += "(" + currentX + " , " + currentY + ")";
+      var toucheX = event.touches[0].pageX;
+      var toucheY = event.touches[0].pageY;
+      dbMsg += "ï½(" + toucheX + " , " + toucheY + ")";
+      current.x = toucheX;
+      current.y = toucheY;
+      drawLine(currentX, currentY, current.x, current.y, current.color, true);
+    }
+    eventComent.innerHTML = dbMsg;
+  };
+
+
+  function onColorUpdate(e) {
     current.color = e.target.className.split(' ')[1];
-		dbMsg ="onColorUpdate;"+current.color;
-		eventComent.innerHTML = dbMsg;
+    dbMsg = "onColorUpdate;" + current.color;
+    eventComent.innerHTML = dbMsg;
   }
 
   // limit the number of events per second
@@ -246,14 +161,13 @@ canvas.addEventListener(EVENTNAME_TOUCHMOVE, throttle(onMouseMove, 10), false);
     };
   }
 
-  function onDrawingEvent(data){
+  function onDrawingEvent(data) {
     var w = canvas.width;
     var h = canvas.height;
-		dbMsg ="onDrawingEvent("+data.x0 +" , " + data.y0+")";
-		dbMsg +="`("+data.x1 +" , " + data.y1+")";
+    dbMsg = "onDrawingEvent(" + data.x0 + " , " + data.y0 + ")";
+    dbMsg += "ï½(" + data.x1 + " , " + data.y1 + ")";
     drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);
-		dbMsg +=",touche("+toucheX +" , " + toucheY+")";
-		eventComent.innerHTML = dbMsg;
+    eventComent.innerHTML = dbMsg;
   }
 
   // make the canvas fill its parent
@@ -262,18 +176,18 @@ canvas.addEventListener(EVENTNAME_TOUCHMOVE, throttle(onMouseMove, 10), false);
     canvas.height = window.innerHeight;
   }
 
-	function allClear() {
-		context.clearRect(0, 0,canvas.width,canvas.height);
-		dbMsg ="allClear";
-		eventComent.innerHTML = dbMsg;
-	}
+  function allClear() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    dbMsg = "allClear";
+    eventComent.innerHTML = dbMsg;
+  }
 
 
-	document.getElementById("allclear").onclick = function() {
-		allClear();
-		socket.emit('allclear',{});
-	};
-	console.log(dbMsg);
-	eventComent.innerHTML = dbMsg;
+  document.getElementById("allclear").onclick = function() {
+    allClear();
+    socket.emit('allclear', {});
+  };
+  console.log(dbMsg);
+  eventComent.innerHTML = dbMsg;
 
 })();

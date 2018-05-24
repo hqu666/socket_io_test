@@ -2,11 +2,13 @@
 <html lang="jp">
 	<head>
 	  <meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>whiteboardサンプル</title>
 		<!--<title>Socket.IO から nodes直下; whiteboard</title>-->
 		<link rel="stylesheet" href="style.css">
 		<meta http-equiv="Pragma" content="no-cache">
 		<meta http-equiv="Cache-Control" content="no-cache">
+
 	</head>
 	<body style="overflow: hidden;">
 		<div id="container">
@@ -19,9 +21,9 @@
 					<div class="color yellow"></div>
 				</div>
 				<div class="buttons" style="left: 400px;">
-					<input type="button" id="allclear" value="消去"
-									style="width: 62px;height: 38px;border-radius: 4px;">
-					<!-- <div class="button" id="allclear">消去</div>  onclick="OnButtonClick();" -->
+					<!-- <div class="ui-btn ui-input-btn ui-corner-all ui-shadow" style="width: 88px;height: 34px;padding: 0px;padding-top: 8px;margin-top: 0px;"> -->
+						<input type="button" id="allclear" value="消去" style="width: 62px;height: 38px;border-radius: 4px;">
+					<!-- </div> -->
 				</div>
 			</div>
 
@@ -30,24 +32,17 @@
 			</div>
 
 			<span id="footer">
-							<span id="infoAria"></span>
+				共有URL≫　<span id="infoAria" style="margin-left: 10px;"></span>
 							<span id="eventComent" style="text-align: right;margin-left:  50px;"></span>
 		</span>
-			<!-- <div id="footer">
-				<div id ="infoAria"></div>
-				<!-- <span id="eventComent" style="text-align: right;margin-left:  50px;"></span> -->
-			<!-- </div> --> -->
 	</div>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/w_board.js"></script>
+
+	</script>
 	<script type="text/javascript">
-		// var clone = require('clone');
-		// var startJs = require('node index.js');
-
-	// onload	;	ページ読み込み時に実行したい処理
-		window.onload = function(){
-
+		window.onload = function(){	// onload	;	ページ読み込み時に実行したい処理
 			var dbmsg = "[onload]";
 			var protocol = location.protocol
 			dbmsg += "　,protocol="+protocol;
@@ -59,19 +54,15 @@
 			dbmsg += "　,path="+path;
 			var query = location.search ;
 			dbmsg += "　,query="+query;
+			// var ipAddress = '<?php echo $_SERVER['REMOTE_ADDR']; ?>';
+			// dbmsg += "　,ipAddress="+ipAddress;
 
 			var	tframe = document.getElementById("tframe");
 			var	titolAncar = document.getElementById("titolAncar");
 
 			var targetUrl = urlStr.replace( path, ":3080" );
 			dbmsg += "　,targetUrl="+targetUrl;
-		//	tframe.src = targetUrl;			//"http://127.0.0.1:3080"="http://localhost:3080"
-	//		titolAncar.href = targetUrl;
-		//		const execSync = require('node index.js').execSync;		// require is not defined
-			// const result =  execSync('node index.js');
-		//	location.href = urlStr + " node index.js";
-			// var shell = new ActiveXObject("node");			//ActiveXObject is not defined
-			// shell.Exec("index.js"); 							// コマンドを実行
+
 			console.log(dbmsg);
 			var infoAria = document.getElementById("infoAria");
 			infoAria.innerHTML = urlStr;
