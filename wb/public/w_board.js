@@ -20,11 +20,19 @@
   canvas.addEventListener('mouseout', onMouseUp, false);
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
   /////////////////////////////////////////////////////////////////////////////
+  // カラーパレットからの移し替え
   for (var i = 0; i < colors.length; i++) {
     colors[i].addEventListener('click', onColorUpdate, false);
   }
 
-  socket.on('drawing', onDrawingEvent); //org;描画
+  // socket.on('drawing', onDrawingEvent); //org;描画
+    socket.on('drawing', function(data) {
+        dbMsg += "recive:drawing";
+        onDrawingEvent(data);
+        console.log(dbMsg);
+        eventComent.innerHTML = dbMsg;
+    });
+
   socket.on('allclear', function(data) {
     dbMsg += "recive:all clear";
     console.log(dbMsg);
@@ -55,6 +63,7 @@
     var w = canvas.width;
     var h = canvas.height;
 
+// 5/25；アクションコードと色のint値が必要
     socket.emit('drawing', {
       x0: x0 / w,
       y0: y0 / h,
