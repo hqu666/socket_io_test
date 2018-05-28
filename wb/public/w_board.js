@@ -63,7 +63,7 @@
 		dbMsg = "colorPalet;";
 		current.color =this.value;			 // current.color = e.target.className.split(' ')[1];
 		dbMsg += ",selectColor="+ current.color;
-		socket.emit('changeColor', current.color);
+		// socket.emit('changeColor', current.color);
 		myLog(dbMsg);
 	}
 
@@ -72,7 +72,7 @@
 		var selectWidth = this.value
 		current.width =  selectWidth;
 		dbMsg += ",selectWidth="+ current.width;
-		socket.emit('changeLineWidth', current.width);
+		// socket.emit('changeLineWidth', current.width);
 		myLog(dbMsg);
 	}
 
@@ -81,7 +81,7 @@
 		var lineCap = this.value
 		current.lineCap =  lineCap;
 		dbMsg += ",lineCap="+ current.lineCap;
-		socket.emit('changeLineCap', current.lineCap);
+		// socket.emit('changeLineCap', current.lineCap);
 		myLog(dbMsg);
 	}
 
@@ -90,35 +90,35 @@
 		socket.emit('allclear', {});
 	}
 
-///////////////////////////////////////////////////////////////////////////////
+//イベント受信////////////////////////////////////////////////////////////////////////////
 	socket.on('drawing', function(data) {
 		dbMsg += "recive:drawing";
 		onDrawingEvent(data);
 		myLog(dbMsg);
 	});
 
-	socket.on('changeColor', function(data) {
-		var dbMsg = "recive:chngeColor="+data;
-		current.color = data;			 // current.color = e.target.className.split(' ')[1];
-		colorPalet.value=current.color;
-		myLog(dbMsg);
-	});
-
-	socket.on('changeLineWidth', function(data) {
-		var dbMsg = "recive:changeLineWidth;";
-		current.width = data;
-		dbMsg += "="+current.width;
-		lineWidthSelect.value=current.width;
-		myLog(dbMsg);
-	});
-
-	socket.on('changeLineCap', function(data) {
-		var dbMsg = "recive:changeLineCap;";
-		current.lineCap = data;
-		dbMsg += "="+current.lineCap;
-		lineCapSelect.value=current.lineCap;
-		myLog(dbMsg);
-	});
+	// socket.on('changeColor', function(data) {
+	// 	var dbMsg = "recive:chngeColor="+data;
+	// 	current.color = data;			 // current.color = e.target.className.split(' ')[1];
+	// 	colorPalet.value=current.color;
+	// 	myLog(dbMsg);
+	// });
+    //
+	// socket.on('changeLineWidth', function(data) {
+	// 	var dbMsg = "recive:changeLineWidth;";
+	// 	current.width = data;
+	// 	dbMsg += "="+current.width;
+	// 	lineWidthSelect.value=current.width;
+	// 	myLog(dbMsg);
+	// });
+    //
+	// socket.on('changeLineCap', function(data) {
+	// 	var dbMsg = "recive:changeLineCap;";
+	// 	current.lineCap = data;
+	// 	dbMsg += "="+current.lineCap;
+	// 	lineCapSelect.value=current.lineCap;
+	// 	myLog(dbMsg);
+	// });
 
 	socket.on('allclear', function(data) {
 		dbMsg += "recive:all clear";
@@ -129,7 +129,7 @@
   window.addEventListener('resize', onResize, false);
   onResize();
 
-
+//イベント反映
 	function onMouseDown(e) {
 		var dbMsg = "onMouseDown;drawing=" + drawing;
 		drawing = true;
@@ -137,6 +137,8 @@
 		current.y = e.clientY;
 		dbMsg = "(" + current.x + " , " + current.y + ")";
 		drawLine( current.x,  current.y, current.x, current.y, current.color , current.width , current.lineCap , 0 , true);
+          //htmlの場合は不要、Androidネイティブは書き出しでパスを生成するので必要
+          //一点しかないので始点終点とも同じ座標を渡すし
 		myLog(dbMsg);
 	}
 
@@ -213,14 +215,14 @@
 		myLog(dbMsg);
 	};
 
-	//drawingで受信したデータ
+	//drawingで受信したデータを書き込む/////////////////////////////////////イベント反映
 	function onDrawingEvent(data) {
 		var w = canvas.width;
 		var h = canvas.height;
 		dbMsg = "onDrawingEvent(" + data.x0 + " , " + data.y0 + ")";
 		dbMsg += "～(" + data.x1 + " , " + data.y1 + ")";
 		dbMsg += ",color=" + data.color+ ",width=" + data.width+ ",lineCap=" + data.lineCap+ ",action=" + data.action;
-		drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color , data.widthr , data.lineCap , data.action , false);
+		drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color , data.width , data.lineCap , data.action , false);
 		myLog(dbMsg);
 	}
 
@@ -249,6 +251,7 @@
 		};
 	}
 
+//自画面のcanvaseに書き込み、指定が有れば送信
 	function drawLine(x0, y0, x1, y1, color ,_width ,_lineCap,action, emit) {
 		var dbMsg = "drawLine(" + x0 + " , " + y0 + ")";
 		dbMsg += "～(" + x1 + " , " + y1 + ")";
@@ -258,20 +261,20 @@
 		dbMsg += "color=" + color;
 		context.strokeStyle = color;
 		dbMsg += ",width=" + _width;
-		if(_width){
+		// if(_width){
 			 context.lineWidth = _width;
-		}else{
-			dbMsg += ">>current.=" + current.width;
-			context.lineWidth  =current.width;
-		}
+		// }else{
+		// 	dbMsg += ">>current.=" + current.width;
+		// 	context.lineWidth  =current.width;
+		// }
 		dbMsg += ">>context=" + context.lineWidth;
 		dbMsg += ",lineCap=" + _lineCap;
-		if(_lineCap){
+		// if(_lineCap){
 			 context.lineCap = _lineCap;
-		}else if(current.lineCap ==""){
-			dbMsg += ">>current.=" + current.lineCap;
-			context.lineCap  ="round";				///current.lineCap;
-		}
+		// }else if(current.lineCap ==""){
+		// 	dbMsg += ">>current.=" + current.lineCap;
+		// 	context.lineCap  ="round";				///current.lineCap;
+		// }
 		dbMsg += ">>context=" + context.lineCap ;
 		dbMsg +=",action=" + action;
 		context.stroke();

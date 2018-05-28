@@ -32,10 +32,11 @@ EC２をSSHで操作
 	④作業フォルダに移動
 		$ cd wb
 	⑤該当スクリプト起動
+		nohup  node index.js &
+
 		☆node index.js  ではシェル終了、ログアウトで接続も切れる
 		☆シェルのログアウト後もプログラムの実行	;	nohup コマンド &　
 			☆"&"でバックグラウンド
-		・	nohup  node index.js &
 			※	nohup: ignoring input and appending output to ‘nohup.out’　と表示されるが起動
 				ログを表示せず同フォルダのnohup.outに書き出される
 		☆windowsローカルでは
