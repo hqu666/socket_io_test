@@ -29,6 +29,7 @@ EC２をSSHで操作
 
 	③	でログイン
 		ssh -i "cs-white-board.pem" ec2-user@52.197.173.40
+
 	④作業フォルダに移動
 		$ cd wb
 	⑤該当スクリプト起動
@@ -207,18 +208,22 @@ npm install express
 		http://irukanobox.blogspot.jp/2016/06/socketio.html
 	10分でできる！Node.jsのSocket.ioを使ったWebSocketによる双方向通信
 		http://webcake.no003.info/webdesign/node-js-socket-io.html
-
 		https://dev.classmethod.jp/server-side/language/node-socket-io/
-
 		https://ics.media/entry/4320
-
 		http://kazuki-room.com/how_to_install_socket-io_on_windows/
-
 		https://qiita.com/talefantasia/items/50bb4237b95dc46c014d
-
 		http://blog.tmyt.jp/entry/2017/01/07/175533
-
 		https://teratail.com/questions/52031
+	Node.js + Socket.IOのサーバの基本構成と、Android版のSocket.IOクライアントのサンプル
+		https://qiita.com/tomo_watanabe/items/78d5bc96904d9e48e4d2
 
-		Node.js + Socket.IOのサーバの基本構成と、Android版のSocket.IOクライアントのサンプル
-			https://qiita.com/tomo_watanabe/items/78d5bc96904d9e48e4d2
+課題
+	①socketioはイベントの発生座標と種類、属性データをJSONObjectで送る
+	・データの跡切れが発生すれば相手側には欠けができる
+	＞＞データで一旦保存したcanvasのビットマップをbolbなどで送れないか
+	>>>S3S3に送ってURLで読み込ませるか？
+	②既に3人目の割り込み
+	・すでに2者間でセッションが始まっていたら3人目は割り込めない
+	＞＞個別にパラメータ（？の後に付加する文字）などで個別セッションを生成できないか
+	　　・index.html?abc=1234&def=5678　　　//　変数abcとdefをパラメータとして送信
+	③接続失敗のトーストが出っぱなしになり、タスクキラーでも消せない

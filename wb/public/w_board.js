@@ -252,30 +252,24 @@
 	}
 
 //自画面のcanvaseに書き込み、指定が有れば送信
-	function drawLine(x0, y0, x1, y1, color ,_width ,_lineCap,action, emit) {
+	function drawLine(x0, y0, x1, y1, _color ,_width ,_lineCap,action, emit) {
 		var dbMsg = "drawLine(" + x0 + " , " + y0 + ")";
 		dbMsg += "～(" + x1 + " , " + y1 + ")";
 		context.beginPath();
 		context.moveTo(x0, y0); //サブパスの開始点
 		context.lineTo(x1, y1); //直前の座標と指定座標を結ぶ直線を引く
-		dbMsg += "color=" + color;
-		context.strokeStyle = color;
+		dbMsg += "color=" + _color;
+		context.strokeStyle = _color;
+		dbMsg += ">>context=" + context.strokeStyle;
+
 		dbMsg += ",width=" + _width;
-		// if(_width){
-			 context.lineWidth = _width;
-		// }else{
-		// 	dbMsg += ">>current.=" + current.width;
-		// 	context.lineWidth  =current.width;
-		// }
+		context.lineWidth = _width;
 		dbMsg += ">>context=" + context.lineWidth;
+
 		dbMsg += ",lineCap=" + _lineCap;
-		// if(_lineCap){
-			 context.lineCap = _lineCap;
-		// }else if(current.lineCap ==""){
-		// 	dbMsg += ">>current.=" + current.lineCap;
-		// 	context.lineCap  ="round";				///current.lineCap;
-		// }
+		context.lineCap = _lineCap;
 		dbMsg += ">>context=" + context.lineCap ;
+
 		dbMsg +=",action=" + action;
 		context.stroke();
 		context.closePath();
@@ -289,7 +283,7 @@
 				y0: y0 / h,
 				x1: x1 / w,
 				y1: y1 / h,
-				color: color,
+				color: context.strokeStyle,
 				width: current.width,
 				lineCap:context.lineCap,
 				action:action
