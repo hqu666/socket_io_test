@@ -12,20 +12,42 @@
 	</head>
 	<body style="overflow: hidden;">
 		<div id="container">
-			<div id="header">
-				<div class="colors">
-					<div class="color black"></div>
-					<div class="color red"></div>
-					<div class="color green"></div>
-					<div class="color blue"></div>
-					<div class="color yellow"></div>
-				</div>
-				<div class="buttons" style="left: 400px;">
-					<!-- <div class="ui-btn ui-input-btn ui-corner-all ui-shadow" style="width: 88px;height: 34px;padding: 0px;padding-top: 8px;margin-top: 0px;"> -->
-						<input type="button" id="allclear" value="消去" style="width: 62px;height: 38px;border-radius: 4px;">
-					<!-- </div> -->
-				</div>
-			</div>
+			<span id="header">
+				<select id="typeSelect" size="1">
+					<option value="free">フリーハンド</option>
+					<option value="text">テキスト</option>
+					<option value="line">直線</option>
+					<option value="stamp">図形スタンプ</option>
+					<option value="erasre">消しゴム</option>
+				</select>
+				<input type="color" id="colorPalet">
+				<span id="graficOptions">
+					線の太さ
+					<select id="lineWidthSelect" size="1">
+						<option value="1"> 1pt</option>
+						<option value="5"> 5pt</option>
+						<option value="10">10pt</option>
+						<option value="20">20pt</option>
+						<option value="50">50pt</option>
+					</select>
+					先端
+					<select id="lineCapSelect" size="1">
+						<option value="round">丸</option>
+						<option value="square">四角</option>
+						<option value="butt">無し</option>
+					</select>
+				</span>
+				<span id="texeOptions">
+					文字サイズ
+					<select id="fontSizeSelect" size="1">
+						<option value="6"> 6pt</option>
+						<option value="12">12pt</option>
+						<option value="24">24pt</option>
+						<option value="48">48pt</option>
+					</select>
+				</span>
+				<input type="button" id="allclear" value="消去" style="width: 62px;height: 38px;border-radius: 4px;margin-left: 50px;">
+			</span>
 
 			<div id="contents">
 				<canvas class="whiteboard" id="hitarea"></canvas>

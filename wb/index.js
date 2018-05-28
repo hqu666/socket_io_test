@@ -10,7 +10,10 @@ app.use(express.static(__dirname + '/public'));
 
 function onConnection(socket){
   socket.on('drawing', (data) => socket.broadcast.emit('drawing', data));
-  socket.on('allclear', (data) => socket.broadcast.emit('allclear', data));				//追記
+  socket.on('changeColor', (data) => socket.broadcast.emit('changeColor', data));           //線の色
+  socket.on('changeLineWidth', (data) => socket.broadcast.emit('changeLineWidth', data));   //線の太さ
+  socket.on('changeLineCap', (data) => socket.broadcast.emit('changeLineCap', data));   //先端形状
+  socket.on('allclear', (data) => socket.broadcast.emit('allclear', data));		       		//全消去
 }
 
 io.on('connection', onConnection);

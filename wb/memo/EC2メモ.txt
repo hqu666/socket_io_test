@@ -54,6 +54,9 @@ EC２をSSHで操作
 
 xamppでのテスト
 ①	cd C:\work\xampp\htdocs\wb\wb
+	cd /d H:\
+	cd H:\develop\xampp\htdocs\wb\wb
+
 ②	node index.js
 
 
@@ -113,7 +116,8 @@ socket.io実行環境の構築
 	③ブラウザで表示させる
 		wifiデバッグ
 		Buffalo-A-02FAもしくはBuffalo-g-02FAでイーサネット アダプター イーサネットの IPv4 アドレスから
-		　192.168.100.6:3080
+		　http://192.168.100.6:3080
+			http://192.168.3.10:3080
 
 	ec2-52-197-173-40.ap-northeast-1.compute.amazonaws.com
 		http://ec2-13-115-171-185.ap-northeast-1.compute.amazonaws.com/SamplePage.php
